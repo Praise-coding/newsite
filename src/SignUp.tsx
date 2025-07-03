@@ -133,8 +133,11 @@ export default function Signup() {
                             <label htmlFor="phoneNumber">Phone Number</label>
                             <div className="phone-input">
                                 <div className="country-select">
-                                    <span className="country-flag" id="selectedFlag">{country.flag}</span>
-                                    <span className="country-code" id="selectedCode">{country.code}</span>
+                                    <div>
+                                        <span className="country-flag" id="selectedFlag">{country.flag}</span>
+                                        <span className="country-code" id="selectedCode">{country.code}</span>
+                                    </div>
+
                                     <select onChange={(e) => { setCountry(JSON.parse(e.target.value)) }} value={JSON.stringify(country)} id="countryCode">
                                         {Countries.map((data, key) => {
                                             return (
