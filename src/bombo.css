@@ -1,0 +1,27 @@
+  .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .input {
+      width: 100%;
+      padding: 10px;
+      font-size: 20px;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+
+    .butttt {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #000000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }

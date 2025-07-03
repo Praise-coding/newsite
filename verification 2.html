@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Verification | Secure Login</title>
+       <i class="fas fa-shield-alt"></i>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(#0F9D58 0%, #4285F4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #0F9D58 0%, #4285F4);
+            padding: 40px 20px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo i {
+            font-size: 40px;
+            color: #DB4437;
+        }
+        
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .phone-input {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .phone-input:focus-within {
+            border-color: #4a00e0;
+            box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.2);
+        }
+        
+        .country-select {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background: #f8f9fa;
+            border-right: 1px solid #ddd;
+            cursor: pointer;
+            min-width: 120px;
+            position: relative;
+        }
+        
+        .country-select::after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: #666;
+            margin-left: 8px;
+        }
+        
+        .country-flag {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .country-code {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .country-select select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .phone-input input {
+            flex: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #DB4437, #F4B400);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(74, 0, 224, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 0, 224, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn .spinner {
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .btn.sending .text {
+            display: none;
+        }
+        
+        .btn.sending .spinner {
+            display: inline-block;
+        }
+        
+        .terms {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .terms a {
+            color: #4a00e0;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .terms a:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: #777;
+            font-size: 13px;
+        }
+        
+        .alternative {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .alt-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .alt-btn:hover {
+            border-color: #4a00e0;
+            color: #4a00e0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer a {
+            color: #4a00e0;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 12px;
+            }
+            
+            .header {
+                padding: 30px 15px 25px;
+            }
+            
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            .alternative {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>Verify Your Account</h1>
+            <p>We'll send a verification code to your phone number to secure your account</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="verificationForm">
+                <div class="input-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <div class="phone-input">
+                        <div class="country-select">
+                            <span class="country-flag" id="selectedFlag">🇺🇸</span>
+                            <span class="country-code" id="selectedCode">+1</span>
+                            <select id="countryCode">
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <input type="tel" id="phoneNumber" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <span class="text">Send Verification Code</span>
+                    <i class="fas fa-spinner spinner"></i>
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Verification code sent successfully!
+            </div>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="alternative">
+                <button class="alt-btn">
+                    <i class="fab fa-google"></i>
+                    Continue with Google
+                </button>
+                <button class="alt-btn">
+                    <i class="fab fa-apple"></i>
+                    Continue with Apple
+                </button>
+            </div>
+            
+            <div class="terms">
+                By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Need help? <a href="#">Contact Support</a> | © 2023 SecureLogin Inc.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Comprehensive country codes data
+            const countryCodes = [
+                // North America
+                { code: "+1", name: "United States", flag: "🇺🇸" },
+                { code: "+1", name: "Canada", flag: "🇨🇦" },
+                { code: "+52", name: "Mexico", flag: "🇲🇽" },
+                { code: "+1 787", name: "Puerto Rico", flag: "🇵🇷" },
+                
+                // South America
+                { code: "+55", name: "Brazil", flag: "🇧🇷" },
+                { code: "+54", name: "Argentina", flag: "🇦🇷" },
+                { code: "+56", name: "Chile", flag: "🇨🇱" },
+                { code: "+57", name: "Colombia", flag: "🇨🇴" },
+                { code: "+51", name: "Peru", flag: "🇵🇪" },
+                { code: "+58", name: "Venezuela", flag: "🇻🇪" },
+                
+                // Europe
+                { code: "+44", name: "United Kingdom", flag: "🇬🇧" },
+                { code: "+33", name: "France", flag: "🇫🇷" },
+                { code: "+49", name: "Germany", flag: "🇩🇪" },
+                { code: "+39", name: "Italy", flag: "🇮🇹" },
+                { code: "+34", name: "Spain", flag: "🇪🇸" },
+                { code: "+7", name: "Russia", flag: "🇷🇺" },
+                { code: "+31", name: "Netherlands", flag: "🇳🇱" },
+                { code: "+41", name: "Switzerland", flag: "🇨🇭" },
+                { code: "+46", name: "Sweden", flag: "🇸🇪" },
+                { code: "+47", name: "Norway", flag: "🇳🇴" },
+                
+                // Africa
+                { code: "+27", name: "South Africa", flag: "🇿🇦" },
+                { code: "+20", name: "Egypt", flag: "🇪🇬" },
+                { code: "+234", name: "Nigeria", flag: "🇳🇬" },
+                { code: "+254", name: "Kenya", flag: "🇰🇪" },
+                { code: "+212", name: "Morocco", flag: "🇲🇦" },
+                { code: "+216", name: "Tunisia", flag: "🇹🇳" },
+                
+                // Asia
+                { code: "+86", name: "China", flag: "🇨🇳" },
+                { code: "+91", name: "India", flag: "🇮🇳" },
+                { code: "+81", name: "Japan", flag: "🇯🇵" },
+                { code: "+82", name: "South Korea", flag: "🇰🇷" },
+                { code: "+60", name: "Malaysia", flag: "🇲🇾" },
+                { code: "+63", name: "Philippines", flag: "🇵🇭" },
+                { code: "+65", name: "Singapore", flag: "🇸🇬" },
+                { code: "+66", name: "Thailand", flag: "🇹🇭" },
+                { code: "+971", name: "UAE", flag: "🇦🇪" },
+                { code: "+962", name: "Jordan", flag: "🇯🇴" },
+                { code: "+84", name: "Vietnam", flag: "🇻🇳" },
+                
+                // Oceania
+                { code: "+61", name: "Australia", flag: "🇦🇺" },
+                { code: "+64", name: "New Zealand", flag: "🇳🇿" },
+                { code: "+689", name: "French Polynesia", flag: "🇵🇫" },
+                
+                // Middle East
+                { code: "+90", name: "Turkey", flag: "🇹🇷" },
+                { code: "+966", name: "Saudi Arabia", flag: "🇸🇦" },
+                { code: "+98", name: "Iran", flag: "🇮🇷" },
+                { code: "+972", name: "Israel", flag: "🇮🇱" },
+                { code: "+974", name: "Qatar", flag: "🇶🇦" }
+            ];
+            
+            const countryCodeSelect = document.getElementById('countryCode');
+            const selectedFlag = document.getElementById('selectedFlag');
+            const selectedCode = document.getElementById('selectedCode');
+            
+            // Populate country code dropdown
+            countryCodes.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.setAttribute('data-flag', country.flag);
+                option.textContent = `${country.flag} ${country.name} (${country.code})`;
+                countryCodeSelect.appendChild(option);
+            });
+            
+            // Set default country (United States)
+            const defaultCountry = countryCodes.find(c => c.name === "United States");
+            if (defaultCountry) {
+                countryCodeSelect.value = defaultCountry.code;
+                selectedFlag.textContent = defaultCountry.flag;
+                selectedCode.textContent = defaultCountry.code;
+            }
+            
+            // Handle country code selection change
+            countryCodeSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                selectedFlag.textContent = selectedOption.getAttribute('data-flag');
+                selectedCode.textContent = selectedOption.value;
+            });
+            
+            // Form submission handler
+            document.getElementById('verificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const countryCode = countryCodeSelect.value;
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
+                
+                if (!phoneNumber) {
+                    alert("Please enter your phone number");
+                    return;
+                }
+                
+                // Validate phone number format
+                if (!/^\d{7,15}$/.test(phoneNumber)) {
+                    alert("Please enter a valid phone number (7-15 digits)");
+                    return;
+                }
+                
+                const fullNumber = countryCode + " " + phoneNumber;
+                
+                // Show loading state
+                const btn = document.querySelector('.btn');
+                btn.classList.add('sending');
+                
+                // Simulate API request (2 seconds)
+                setTimeout(() => {
+                    // Hide loading state
+                    btn.classList.remove('sending');
+                    
+                    // Show success message
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.style.display = 'block';
+                    
+                    // Clear input
+                    document.getElementById('phoneNumber').value = '';
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                    
+                    // In a real application, you would redirect to the verification code entry page
+                    console.log(`Verification code sent to: ${fullNumber}`);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

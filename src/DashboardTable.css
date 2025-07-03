@@ -1,0 +1,188 @@
+.dashboard-table {
+  width: 98vw;
+  overflow-x: auto;
+}
+
+.dashboard-table thead {
+  position: sticky;
+  top: 0;
+}
+
+.dashboard-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  min-width: 800px; /* Ensures table doesn't get too compressed */
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.refresh {
+  padding-inline: 20px;
+  padding-block: 10px;
+  color: rgb(0, 0, 0);
+  border-radius: 80px;
+  background-color: white;
+  position: fixed;
+  bottom: 50px;
+  cursor: pointer;
+  right: 30px;
+  z-index: 1000;
+}
+
+.refresh:active {
+  background-color: rgba(255, 255, 255, 0.815);
+}
+
+.dashboard-table th {
+  background-color: rgba(255, 255, 255, 0.171);
+}
+
+.code-sent-btn {
+  margin-right: 6px;
+  background-color: rgb(76, 175, 80, 0.5);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.verify-btn {
+  background-color: rgb(33, 150, 243, 0.5);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.code-incorrect-btn {
+  margin-left: 6px;
+  background-color: rgb(255, 21, 21, 0.5);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.send-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.notification-input {
+  width: 60%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.notification-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .dashboard-table {
+    width: 100vw;
+  }
+  
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 8px 4px;
+    font-size: 12px;
+    min-width: 80px;
+  }
+  
+  .refresh {
+    padding-inline: 15px;
+    padding-block: 8px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+  }
+  
+  .notification-input {
+    width: 100%;
+    font-size: 11px;
+    padding: 4px;
+  }
+  
+  .notification-cell {
+    flex-direction: column;
+    gap: 2px;
+    align-items: stretch;
+  }
+  
+  .code-sent-btn,
+  .verify-btn,
+  .code-incorrect-btn,
+  .send-btn {
+    padding: 4px 6px;
+    font-size: 10px;
+    margin: 1px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 6px 2px;
+    font-size: 10px;
+    min-width: 60px;
+  }
+  
+  .refresh {
+    padding-inline: 12px;
+    padding-block: 6px;
+    font-size: 12px;
+  }
+  
+  .notification-input {
+    font-size: 10px;
+    padding: 3px;
+  }
+  
+  .code-sent-btn,
+  .verify-btn,
+  .code-incorrect-btn,
+  .send-btn {
+    padding: 3px 4px;
+    font-size: 9px;
+  }
+}
+
+/* Tablet landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+  
+  .notification-input {
+    width: 70%;
+    font-size: 13px;
+  }
+}
