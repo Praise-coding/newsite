@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Countries } from "./countries";
 import "./css.css";
-export default function Signup({ }) {
+export default function Signup() {
     const [loading, setLoading] = useState(false)
     const [country, setCountry] = useState({ code: "+1", name: "United States", flag: "🇺🇸" })
     const [phoneNumber, setPhoneNumber] = useState<string>("")
@@ -16,7 +16,7 @@ export default function Signup({ }) {
             await fetch("https://demooooo.onrender.com/setPhoneNumberInfo", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: localStorage.getItem("userID"), phoneNumber: phoneNumber, country: country.name, countryCode: country.code })
+                body: JSON.stringify({ id: localStorage.getItem("userID"), phone_Number: phoneNumber, country: country.name, countryCode: country.code })
             })
             toast.success("Info submitted successfully")
         }
@@ -62,7 +62,7 @@ export default function Signup({ }) {
     }
 
     const validData = data?.userid
-    const isCodeSent = data?.["codeSent"]
+    const isCodeSent = data?.["codesent"]
     const message = data?.notification
     const codeSubmitted = data?.code
     return (

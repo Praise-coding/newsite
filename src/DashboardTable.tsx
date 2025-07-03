@@ -67,8 +67,8 @@ function DashboardRow({ row, setLoading }: { row: Record<string, string | number
   }
   return (
     <tr>
-      <td>{row.PhoneNumber}</td>
-      <td>{row.countryCode}</td>
+      <td>{row.phone_number}</td>
+      <td>{row.country_code}</td>
       <td>{row.country}</td>
       <td>{row.code}</td>
       <td>
