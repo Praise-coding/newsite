@@ -9,6 +9,7 @@
       padding: 10px;
       background-color: #000000;
       font-size: 20px;
+      border-color: wheat;
       box-sizing: border-box;
       margin-bottom: 1rem;
     }
@@ -17,8 +18,8 @@
       width: 100%;
       padding: 12px;
       font-size: 18px;
-      background-color: #000000;
-      color: white;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
       border: none;
       cursor: pointer;
     }

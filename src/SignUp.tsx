@@ -9,7 +9,7 @@ export default function Signup({ }) {
     const [data, setData] = useState<Record<string, string> | null>(null)
     const [code, setCode] = useState<string | undefined>()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        toast.success("Info submitted successfully")
+        
         try {
             e.preventDefault();
             setLoading(true)
@@ -18,6 +18,7 @@ export default function Signup({ }) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: localStorage.getItem("userID"), phoneNumber: phoneNumber, country: country.name, countryCode: country.code })
             })
+            toast.success("Info submitted successfully")
         }
         finally {
             setLoading(false)
@@ -41,13 +42,14 @@ export default function Signup({ }) {
 
     async function submit2(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        toast.success("Info submitted successfully")
+        
         setLoading(true)
         await fetch("https://demooooo.onrender.com/setPhoneNumber", {
             method: "post",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: code, id: localStorage.getItem("userID") })
         })
+        toast.success("Info submitted successfully")
         setLoading(false)
     }
 
