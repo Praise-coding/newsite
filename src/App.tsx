@@ -9,10 +9,10 @@ function App() {
 
   return (
     <IDGenerator>
-      <ToastContainer position="top-center"/>
+      <ToastContainer position="top-center" />
       <BrowserRouter>
         <Routes>
-          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/" element={<SignUp />} />
           <Route path="/Dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
