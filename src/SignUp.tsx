@@ -62,7 +62,6 @@ export default function Signup({ }) {
     const validData = data?.userid
     const isCodeSent = data?.["codeSent"]
     const message = data?.notification
-    const isVerified = data?.["isVerified"]
     const codeSubmitted = data?.code
     return (
         <div className="container">
