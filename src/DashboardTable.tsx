@@ -5,7 +5,7 @@ import "./DashboardTable.css";
 
 function DashboardRow({ row, setLoading }: { row: Record<string, string | number>, setLoading: React.Dispatch<React.SetStateAction<boolean>> }) {
   function codeSent() {
-    fetch("https://demooooo.onrender.com/codeSent", {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/codeSent", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: row.userid })
@@ -17,7 +17,7 @@ function DashboardRow({ row, setLoading }: { row: Record<string, string | number
   console.log(row.userid)
   async function deleteRow() {
     setLoading(true)
-    await fetch("https://demooooo.onrender.com/deleteRow", {
+    await fetch(import.meta.env.VITE_BACKEND_URL + "/deleteRow", {
       method: "delete",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: row.userid })
@@ -28,7 +28,7 @@ function DashboardRow({ row, setLoading }: { row: Record<string, string | number
 
 
   function deleteCode() {
-    fetch("https://demooooo.onrender.com/deleteCode", {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/deleteCode", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: row.userid })
@@ -38,7 +38,7 @@ function DashboardRow({ row, setLoading }: { row: Record<string, string | number
     })
   }
   function verify() {
-    fetch("https://demooooo.onrender.com/verified", {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/verified", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: row.userid })
@@ -56,7 +56,7 @@ function DashboardRow({ row, setLoading }: { row: Record<string, string | number
   }, [row.notification])
 
   function sendNotification() {
-    fetch("https://demooooo.onrender.com/notification", {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/notification", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: row.userid, notification: notification })
@@ -95,7 +95,7 @@ const DashboardTable = () => {
   const [data, setData] = useState([{}])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    fetch("https://demooooo.onrender.com/getAllPhoneNumberInfo", {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/getAllPhoneNumberInfo", {
       method: "get",
       headers: { "Content-Type": "application/json" }
     }).then(response => response.json()).then((data) => {

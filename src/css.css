@@ -537,3 +537,49 @@ label {
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     }
 }
+
+
+
+.resend-message {
+    margin-top: 20px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #f9f9f9;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    display: inline-block;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.resend-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 4px;
+    font-size: 14px;
+}
+
+.resend-btn:hover {
+    /*color: #0056b3;*/
+}
+
+.countdown {
+    font-weight: bold;
+}
+
+/* Responsive tweaks for very small screens */
+@media (max-width: 400px) {
+    .resend-message {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    .resend-btn {
+        font-size: 12px;
+    }
+}

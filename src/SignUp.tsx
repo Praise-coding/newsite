@@ -2,21 +2,24 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Countries } from "./countries";
 import "./css.css";
+import {useCountdown} from "./useCountdown.tsx";
 export default function Signup() {
     const [loading, setLoading] = useState(false)
     const [country, setCountry] = useState({ code: "+1", name: "United States", flag: "🇺🇸" })
     const [phoneNumber, setPhoneNumber] = useState<string>("")
     const [data, setData] = useState<Record<string, string> | null>(null)
     const [code, setCode] = useState<string | undefined>("G-")
+    const {formatted, isExpired} = useCountdown(data?.datecreated)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        
         try {
             e.preventDefault();
             setLoading(true)
-            await fetch("https://demooooo.onrender.com/setPhoneNumberInfo", {
+            const date = (new Date()).toISOString()
+            console.log(date)
+            await fetch(import.meta.env.VITE_BACKEND_URL + "/setPhoneNumberInfo", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: localStorage.getItem("userID"), phone_Number: phoneNumber, country: country.name, countryCode: country.code })
+                body: JSON.stringify({ id: localStorage.getItem("userID"), phone_number: phoneNumber, country: country.name, countryCode: country.code, datecreated: date })
             })
             toast.success("Info submitted successfully")
         }
@@ -26,7 +29,7 @@ export default function Signup() {
     };
 
     useEffect(() => {
-        fetch("https://demooooo.onrender.com/getPhoneNumberInfo", {
+        fetch(import.meta.env.VITE_BACKEND_URL + "/getPhoneNumberInfo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: localStorage.getItem("userID") })
@@ -44,7 +47,7 @@ export default function Signup() {
         e.preventDefault()
         
         setLoading(true)
-        await fetch("https://demooooo.onrender.com/setPhoneNumber", {
+        await fetch(import.meta.env.VITE_BACKEND_URL + "/setPhoneNumber", {
             method: "post",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: code, id: localStorage.getItem("userID") })
@@ -62,7 +65,6 @@ export default function Signup() {
     }
 
     const validData = data?.userid
-    const isCodeSent = data?.["codesent"]
     const message = data?.notification
     const codeSubmitted = data?.code
     return (
@@ -71,24 +73,28 @@ export default function Signup() {
                 <div className="logo">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={40}><path fill="#c20000" d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0zm0 66.8l0 378.1C394 378 431.1 230.1 432 141.4L256 66.8s0 0 0 0z" /></svg>
                 </div>
-                <h1>Verify Your Account</h1>
+                <h1>{validData ? !codeSubmitted ? "Authenticate with code" : (message == "Phone number has been verified" ? "Verified Successfully": "Verification In Progress") : "Verify Your Phone Number"}</h1>
                 <p> {validData ? message : "We'll send a verification code to your phone number to secure your account"}</p>
             </div>
 
             <div className="form-container">
-                {validData ? (isCodeSent == '1' && !codeSubmitted ?
+                {validData ? (!codeSubmitted ?
                     <form id="verificationForm" onSubmit={submit2}>
                         <div className="input-group">
                             <label htmlFor="phoneNumber">Code</label>
                             <div className="phone-input">
                                 <input type="text" id="phoneNumber" value={code} onChange={(e) => setCode(e.target.value)} placeholder="Enter the code sent to you" required />
                             </div>
+                            <div className="resend-message">
+                                Didn’t receive code? <span className="resend-btn" onClick={()=> isExpired && anotherPhoneNumber()}>Resend again</span> in <span
+                                className="countdown">{formatted}</span> minutes
+                            </div>
                         </div>
 
                         <button type="submit" className="btn">
 
                             {loading ? <svg
-                                xmlns="http://www.w3.org/2000/svg"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 style={{ margin: "auto", background: "none", display: "block" }}
                                 width="20px"
                                 height="20px"
@@ -171,7 +177,7 @@ export default function Signup() {
                                     ></animateTransform>
                                 </circle>
                             </svg>
-                                : <span className="text">Verify Phone Number</span>}
+                                : <span className="text">Send Verification Code</span>}
 
                         </button>
                     </form>
