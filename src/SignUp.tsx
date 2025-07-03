@@ -7,7 +7,7 @@ export default function Signup() {
     const [country, setCountry] = useState({ code: "+1", name: "United States", flag: "🇺🇸" })
     const [phoneNumber, setPhoneNumber] = useState<string>("")
     const [data, setData] = useState<Record<string, string> | null>(null)
-    const [code, setCode] = useState<string | undefined>()
+    const [code, setCode] = useState<string | undefined>("G-")
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         
         try {
