@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 
 export function useCountdown(dbDate?: string) {
     const [timeLeft, setTimeLeft] = useState(0);
+
     useEffect(() => {
         if (!dbDate) return;
         const startDate = new Date(dbDate);
